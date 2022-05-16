@@ -1,0 +1,71 @@
+﻿@model Planpinterview.Models.Player
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Add player</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="name" class="control-label">Name</label>
+                <input asp-for="name" class="form-control" />
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="address" class="control-label">Address</label>
+                <input asp-for="address" class="form-control" />
+                <span asp-validation-for="address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="date" class="control-label">Date</label>
+                <input asp-for="date" class="form-control" />
+                <span asp-validation-for="date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="categprogramid" class="control-label">Programe</label>
+                <select asp-for="categprogramid" class ="form-control" asp-items="ViewBag.categprogramid">
+                    <option></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="monyvalue" class="control-label">Price</label>
+                <input asp-for="monyvalue" class="form-control" />
+                <span asp-validation-for="monyvalue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add player" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section scripts{
+                <script>
+
+
+                    $(document).ready(function () {
+                        $('#categprogramid').on('change', function () {
+                            
+                            $.ajax({
+                                url: "/Players/getmonyvalue/" + $('#categprogramid').val(),
+                                success: function (result) {
+                                   
+                                    result = JSON.parse(result);
+                                    console.log(result);
+                                    $('#monyvalue').val(result);
+                                },
+                                error: function () {
+                                    $('#monyvalue').val("");
+                                }
+                            });
+                        });
+                    })
+                </script>
+}
+

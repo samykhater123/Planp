@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Planpinterview.Models.Player>
+
+@{
+    ViewData["Title"] = "FilterResults";
+}
+
+<h1>Results</h1>
+<center>
+    @using (Html.BeginForm("FilterResults", "Players", FormMethod.Post))
+    {
+        <span>start date:</span> <input type="date" name="start" />
+        <span>End date:</span> <input type="date" name="end" />
+        <input type="submit" asp-action="FilterResults"class="btn btn-success" value="Filter" />
+        <br />
+        <label> From @Html.TextBox("start", null, new { @class = "form-control datepicker" })</label>
+        <label>To @Html.TextBox("end", null, new { @class = "form-control datepicker" })</label>
+        <label id="totfilter" style="font-size:large">Total Mony= @Model.Select(x => x.monyvalue).Sum() </label>
+        <label style="background-color:gainsboro;font-size:large"> Total Players= @Model.Select(x => x.id).Count() </label>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.address)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.categprogram)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.monyvalue)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.categprogram.name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.monyvalue)
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</center>
+
